@@ -2,6 +2,18 @@ import io
 import os
 from google.cloud import vision
 
+def get_text_from_file(file):
+
+    client = vision.ImageAnnotatorClient()
+
+    content = file.read()
+    image = vision.Image(content=content)
+
+    response = client.text_detection(image=image)
+    text = response.text_annotations[0].description
+
+    return text
+
 def get_receipt_text(file_name):
     """Extracts text from a receipt image using Google Cloud OCR API.
     Args:
