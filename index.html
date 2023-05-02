@@ -10,10 +10,15 @@
 		<button type="submit">Upload</button>
 	</form>
 
+	<div id="response"></div>
+
 	<script>
 		// Get the upload form and image input elements
 		const form = document.querySelector('#upload-form');
 		const imageInput = document.querySelector('#image-input');
+
+		// Get the response element to display the server response
+		const responseDiv = document.querySelector('#response');
 
 		// Add an event listener to the form submit button
 		form.addEventListener('submit', async (event) => {
@@ -34,8 +39,11 @@
 
 			// Handle the response from the server
 			if (response.ok) {
+				const data = await response.json();
+				responseDiv.textContent = `Server response: ${data.text}`;
 				alert('Image uploaded successfully!');
 			} else {
+				responseDiv.textContent = 'Error uploading image.';
 				alert('Error uploading image.');
 			}
 		});
