@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Image Upload</title>
+</head>
+<body>
+	<h1>Upload an image</h1>
+	<form id="upload-form" enctype="multipart/form-data">
+		<input type="file" name="image" id="image-input">
+		<button type="submit">Upload</button>
+	</form>
+
+	<script>
+		// Get the upload form and image input elements
+		const form = document.querySelector('#upload-form');
+		const imageInput = document.querySelector('#image-input');
+
+		// Add an event listener to the form submit button
+		form.addEventListener('submit', async (event) => {
+			event.preventDefault();
+
+			// Get the selected image file
+			const file = imageInput.files[0];
+
+			// Create a FormData object to send the file to the server
+			const formData = new FormData();
+			formData.append('image', file);
+
+			// Send a POST request to the server to upload the image
+			const response = await fetch('http://127.0.0.1:5000/upload', {
+				method: 'POST',
+				body: formData
+			});
+
+			// Handle the response from the server
+			if (response.ok) {
+				alert('Image uploaded successfully!');
+			} else {
+				alert('Error uploading image.');
+			}
+		});
+	</script>
+</body>
+</html>
