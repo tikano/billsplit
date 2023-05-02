@@ -10,5 +10,5 @@ To run the ocr library, you will need to follow authentication instructions foun
 
 Then start the backend server with `flask run`
 
-Open index.html in your preferred browser and you will be able to interact with the application!
+Open `index.html` in your preferred browser and you will be able to interact with the application!
 
