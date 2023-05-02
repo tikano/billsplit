@@ -1,52 +1,111 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Image Upload</title>
+    <title>Image Upload</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input[type="file"] {
+            margin-bottom: 1rem;
+        }
+        button[type="submit"] {
+            background-color: #9146FF;
+            color: #fff;
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-bottom: 1rem;
+        }
+        button[type="submit"]:hover {
+            background-color: #6C3DCC;
+        }
+        #response {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-	<h1>Upload an image</h1>
-	<form id="upload-form" enctype="multipart/form-data">
-		<input type="file" name="image" id="image-input">
-		<button type="submit">Upload</button>
-	</form>
+    <div class="container">
+        <h1>Upload an image</h1>
+        <form id="upload-form" enctype="multipart/form-data">
+            <input type="file" name="image" id="image-input">
+            <button type="submit">Upload</button>
+        </form>
 
-	<div id="response"></div>
+        <div id="response"></div>
 
-	<script>
-		// Get the upload form and image input elements
-		const form = document.querySelector('#upload-form');
-		const imageInput = document.querySelector('#image-input');
+        <script>
+            // Get the upload form and image input elements
+            const form = document.querySelector('#upload-form');
+            const imageInput = document.querySelector('#image-input');
 
-		// Get the response element to display the server response
-		const responseDiv = document.querySelector('#response');
+            // Get the response element to display the server response
+            const responseDiv = document.querySelector('#response');
 
-		// Add an event listener to the form submit button
-		form.addEventListener('submit', async (event) => {
-			event.preventDefault();
+            // Add an event listener to the form submit button
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
 
-			// Get the selected image file
-			const file = imageInput.files[0];
+                // Get the selected image file
+                const file = imageInput.files[0];
 
-			// Create a FormData object to send the file to the server
-			const formData = new FormData();
-			formData.append('image', file);
+                // Create a FormData object to send the file to the server
+                const formData = new FormData();
+                formData.append('image', file);
 
-			// Send a POST request to the server to upload the image
-			const response = await fetch('http://127.0.0.1:5000/upload', {
-				method: 'POST',
-				body: formData
-			});
+                // Send a POST request to the server to upload the image
+                const response = await fetch('http://127.0.0.1:5000/upload', {
+                    method: 'POST',
+                    body: formData
+                });
 
-			// Handle the response from the server
-			if (response.ok) {
-				const data = await response.json();
-				responseDiv.textContent = `Server response: ${data.text}`;
-				alert('Image uploaded successfully!');
-			} else {
-				responseDiv.textContent = 'Error uploading image.';
-				alert('Error uploading image.');
-			}
-		});
-	</script>
+                // Handle the response from the server
+                if (response.ok) {
+                    const data = await response.json();
+                    responseDiv.textContent = `Server response: ${data.text}`;
+                    alert('Image uploaded successfully!');
+                } else {
+                    responseDiv.textContent = 'Error uploading image.';
+                    alert('Error uploading image.');
+                }
+            });
+        </script>
 </body>
 </html>
