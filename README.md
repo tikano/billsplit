@@ -8,6 +8,7 @@ Install the required packages by running `pip install -r requirements.txt`
 
 To run the ocr library, you will need to follow authentication instructions found here: https://cloud.google.com/functions/docs/tutorials/ocr
 
-Finally, start the application with `flask run`
+Then start the backend server with `flask run`
 
-Go to the endpoint given in the terminal and you should be able to see the application up and running
+Open index.html in your preferred browser and you will be able to interact with the application!
+
