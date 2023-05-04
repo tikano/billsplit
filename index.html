@@ -59,6 +59,11 @@
             margin-top: 1.5rem;
             color: #333;
         }
+		#output {
+		  display: block;
+		  margin-left: auto;
+		  margin-right: auto;
+		}
     </style>
 </head>
 <body>
@@ -70,6 +75,8 @@
         </form>
 
         <div id="response"></div>
+		
+		<img id="output"></img>
 
         <script>
             // Get the upload form and image input elements
@@ -78,13 +85,25 @@
 
             // Get the response element to display the server response
             const responseDiv = document.querySelector('#response');
+			
+			const imageDisplay = document.querySelector('#output');
 
             // Add an event listener to the form submit button
             form.addEventListener('submit', async (event) => {
                 event.preventDefault();
 
+				
                 // Get the selected image file
                 const file = imageInput.files[0];
+				
+				
+				const reader = new FileReader();
+				
+				reader.addEventListener('load', (e) => {
+					imageDisplay.src = e.target.result;
+				});
+				
+				reader.readAsDataURL(file);
 
                 // Create a FormData object to send the file to the server
                 const formData = new FormData();
@@ -95,11 +114,13 @@
                     method: 'POST',
                     body: formData
                 });
+				
+				
 
                 // Handle the response from the server
                 if (response.ok) {
                     const data = await response.json();
-                    responseDiv.textContent = `Server response: ${data.text}`;
+                    responseDiv.textContent = `Server response: ${data.text}`;;
                     alert('Image uploaded successfully!');
                 } else {
                     responseDiv.textContent = 'Error uploading image.';
