@@ -31,7 +31,6 @@ def get_text_from_file(file):
     
     filearray = [newimage]
     prediction = model.recognize(filearray)
-    print(prediction)
     
     filearray = [np.asarray(Image.open(file))];
     fig, axs = plt.subplots(nrows=len(filearray), figsize=(20, 20))
@@ -39,6 +38,8 @@ def get_text_from_file(file):
     for ax, img, predictions in zip(axs, filearray, prediction):
         keras_ocr.tools.drawAnnotations(image=img, predictions=predictions, ax=ax)
     fig.savefig("plot.png")
+    
+    
     max = 0
     newstring = ""
     for word, box in prediction[0]:
@@ -53,7 +54,7 @@ def get_text_from_file(file):
                           
     val = int(newstring)/100.0
         
-    text = "The total bill is $" + str(val)
+    text = str(val)
     return text
     
 

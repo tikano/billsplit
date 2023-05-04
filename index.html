@@ -71,8 +71,12 @@
         <h1>Upload an image</h1>
         <form id="upload-form" enctype="multipart/form-data">
             <input type="file" name="image" id="image-input">
+			<label> Party Size <input id="people" type="number" value="4"/> </label>
+			<label> Tip (in %) <input id="tip" type="number" value="15"/> </label>
             <button type="submit">Upload</button>
         </form>
+		
+		
 
         <div id="response"></div>
 		
@@ -82,6 +86,8 @@
             // Get the upload form and image input elements
             const form = document.querySelector('#upload-form');
             const imageInput = document.querySelector('#image-input');
+			const size = document.querySelector('#people');
+			const tip = document.querySelector('#tip');
 			var count = 0;
 
             // Get the response element to display the server response
@@ -128,7 +134,11 @@
                 // Handle the response from the server
                 if (response.ok) {
                     const data = await response.json();
-                    responseDiv.textContent = `Server response: ${data.text}`;
+					var cost = parseFloat(data.text);
+					cost = cost * (1.0 + tip.value/100.0);
+					cost = cost / (size.value);
+					cost = cost.toFixed(2);
+                    responseDiv.textContent = "Each person should pay $" + cost;
 					count = count + 1;
 					imageDisplay.src = "plot.png?check=" + count;
 					imageDisplay.height = height;
