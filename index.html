@@ -82,6 +82,7 @@
             // Get the upload form and image input elements
             const form = document.querySelector('#upload-form');
             const imageInput = document.querySelector('#image-input');
+			var count = 0;
 
             // Get the response element to display the server response
             const responseDiv = document.querySelector('#response');
@@ -128,7 +129,8 @@
                 if (response.ok) {
                     const data = await response.json();
                     responseDiv.textContent = `Server response: ${data.text}`;
-					imageDisplay.src = "plot.png";
+					count = count + 1;
+					imageDisplay.src = "plot.png?check=" + count;
 					imageDisplay.height = height;
 					imageDisplay.width = width;
                     alert('Image uploaded successfully!');

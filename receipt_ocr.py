@@ -4,6 +4,7 @@ from google.cloud import vision
 from PIL import Image;
 import matplotlib.pyplot as plt
 import numpy as np;
+import cv2;
 
 import keras_ocr;
 
@@ -25,6 +26,9 @@ def get_text_from_file(file):
     newimage = file;
     
     
+    with open("image.png", 'wb') as f:
+        f = file;
+    
     filearray = [newimage]
     prediction = model.recognize(filearray)
     print(prediction)
@@ -35,7 +39,21 @@ def get_text_from_file(file):
     for ax, img, predictions in zip(axs, filearray, prediction):
         keras_ocr.tools.drawAnnotations(image=img, predictions=predictions, ax=ax)
     fig.savefig("plot.png")
-    text = "n"
+    max = 0
+    newstring = ""
+    for word, box in prediction[0]:
+        if (word == "total" or word == "amount") and box[0][1] > max:
+            max = box[0][1]
+    for word, box in prediction[0]:
+        if abs(box[0][1] - max) < 20:
+                if(word.isnumeric()):
+                    newstring = newstring + word
+                elif(word[1:].isnumeric()):
+                    newstring = newstring + word[1:]
+                          
+    val = int(newstring)/100.0
+        
+    text = "The total bill is $" + str(val)
     return text
     
 
