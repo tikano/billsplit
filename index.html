@@ -102,9 +102,12 @@
 				
 				reader.addEventListener('load', (e) => {
 					imageDisplay.src = e.target.result;
-					console.log(imageDisplay.height);
-					height = imageDisplay.height;
-					width = imageDisplay.width;
+					imageDisplay.addEventListener('load', (e) => {
+						console.log(imageDisplay.height);
+						height = imageDisplay.height;
+						width = imageDisplay.width;
+					});
+					responseDiv.textContent = "Loading...";
 				});
 				
 				reader.readAsDataURL(file);
