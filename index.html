@@ -88,6 +88,7 @@
 			
 			const imageDisplay = document.querySelector('#output');
 
+
             // Add an event listener to the form submit button
             form.addEventListener('submit', async (event) => {
                 event.preventDefault();
@@ -101,6 +102,9 @@
 				
 				reader.addEventListener('load', (e) => {
 					imageDisplay.src = e.target.result;
+					console.log(imageDisplay.height);
+					height = imageDisplay.height;
+					width = imageDisplay.width;
 				});
 				
 				reader.readAsDataURL(file);
@@ -120,7 +124,10 @@
                 // Handle the response from the server
                 if (response.ok) {
                     const data = await response.json();
-                    responseDiv.textContent = `Server response: ${data.text}`;;
+                    responseDiv.textContent = `Server response: ${data.text}`;
+					imageDisplay.src = "plot.png";
+					imageDisplay.height = height;
+					imageDisplay.width = width;
                     alert('Image uploaded successfully!');
                 } else {
                     responseDiv.textContent = 'Error uploading image.';
