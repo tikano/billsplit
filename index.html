@@ -139,6 +139,8 @@
 					cost = cost / (size.value);
 					cost = cost.toFixed(2);
                     responseDiv.textContent = "Each person should pay $" + cost;
+					let num = prompt("Any numbers you want to send this bill amount to?");
+					let name = prompt("Any name you would want to be listed as?");
 					count = count + 1;
 					imageDisplay.src = "plot.png?check=" + count;
 					imageDisplay.height = height;
